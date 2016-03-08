@@ -41,9 +41,9 @@ router.get('/getxkcd', function(req, res) {
 	request(xkcd).pipe(res);
 });
 
-var weather = "https://api.wunderground.com/api/5e674d9f897208bf/geolookup/conditions/q/UT/Provo.json";
 router.get('/getweather', function(req, res) {
 	console.log("In getweather route");
+	var weather = "https://api.wunderground.com/api/5e674d9f897208bf/geolookup/conditions/q/UT/" + req.query.q + ".json";
 	request(weather).pipe(res);
 });
 
