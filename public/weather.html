@@ -26,6 +26,25 @@
 					.complete(function() { console.log("complete"); });
 					$("#txtHint").text("Keyup "+$("#cityfield").val());
 				});
+
+
+			    var politics = "politics";
+			    $.ajax({
+			      url: politics,
+			      success: function( data ) {
+						console.log(data);
+						var name = data[440]['Name'];
+						var party = data[440]['party'];
+						var state = data[440]['state'];
+						everything = "<b>Political Representative:</b>"
+						everything += "<ul>";
+						everything += "<li>Name: "+name+"</li>";
+						everything += "<li>Party: "+party+"</li>";
+						everything += "<li>State: "+state+"</li>";
+						everything += "</ul>";
+						$("#politics").html(everything);
+			      }
+			    });
 			});
 
 			function updateText()
@@ -34,19 +53,18 @@
 				console.log(city);
 				$("#dispcity").text(city);
 
-				var myurl= "https://api.wunderground.com/api/5e674d9f897208bf/geolookup/conditions/q/UT/";
+				var myurl= "getweather?q=";
 				myurl += city;
-				myurl += ".json";
 				console.log(myurl);
 				$.ajax({
 					url : myurl,
-					dataType : "jsonp",
-					success : function(parsed_json) {
-					    console.log(parsed_json);
+					success : function( parsed_json ) {
+					    console.log( parsed_json );
 					    var location = parsed_json['location']['city'];
 						var temp_string = parsed_json['current_observation']['temperature_string'];
 						var current_weather = parsed_json['current_observation']['weather'];
-						everything = "<ul>";
+						everything = "<b>Current Weather:</b>"
+						everything += "<ul>";
 						everything += "<li>Location: "+location+"</li>";
 						everything += "<li>Temperature: "+temp_string+"</li>";
 						everything += "<li>Weather: "+current_weather+"</li>";
@@ -68,6 +86,7 @@
 		<p>City</p>
 		<textarea id="dispcity">No City</textarea>
 		<p>Current Weather</p>
+		<div id="politics">No politics</div>
 		<div id="weather">No weather</div>
 	</body>
 </html>
